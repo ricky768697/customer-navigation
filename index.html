@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Portal</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-dark: #162d67;
+      --secondary: #0ea5e9;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --muted: #475569;
+      --card: #ffffff;
+      --success: #10b981;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 72px;
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-btn {
+      padding: 12px 18px;
+      background: var(--primary);
+      color: white;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .hero {
+      padding: 90px 0 60px;
+      background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.1;
+      margin: 0 0 20px;
+      color: var(--text);
+    }
+
+    .hero p {
+      font-size: 1.08rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+      max-width: 600px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .mini-stat {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+    }
+
+    .mini-stat:last-child {
+      border-bottom: none;
+    }
+
+    .mini-stat strong {
+      color: var(--primary);
+      font-size: 1.3rem;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      margin: 0 auto;
+      max-width: 640px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .feature {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 22px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: #dbeafe;
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      margin-bottom: 18px;
+    }
+
+    .feature h3 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .step {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px 22px;
+      text-align: center;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .step h3 {
+      margin: 0 0 10px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .cta-band {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 52px 30px;
+      text-align: center;
+    }
+
+    .cta-band h2 {
+      margin: 0 0 16px;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+    }
+
+    .cta-band p {
+      margin: 0 auto 26px;
+      max-width: 680px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+    }
+
+    .faq {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 12px;
+    }
+
+    .faq h4 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .faq p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .contact-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 22px;
+    }
+
+    .contact-box h3 {
+      margin-top: 0;
+    }
+
+    .info-row {
+      margin-bottom: 12px;
+      color: var(--muted);
+    }
+
+    footer {
+      background: #0f172a;
+      color: white;
+      padding: 28px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: rgba(255,255,255,0.85);
+    }
+
+    @media (max-width: 800px) {
+      .hero-inner,
+      .features-grid,
+      .steps,
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        flex-direction: column;
+        justify-content: center;
+        padding: 16px 0;
+      }
+
+      .nav-links {
+        justify-content: center;
+        padding-top: 12px;
+      }
+
+      .hero {
+        padding-top: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">YourBrand</div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#process">How it Works</a>
+        <a href="#support">Support</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="nav-btn">Get Started</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <h1>Customer support that feels simple, fast, and helpful.</h1>
+          <p>
+            We make it easy for customers to find answers, access services, and get help quickly.
+            Clear navigation, reliable support, and a better overall experience.
+          </p>
+
+          <div class="cta-row">
+            <a href="#services" class="btn btn-primary">Explore Services</a>
+            <a href="#contact" class="btn btn-secondary">Contact Us</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="mini-stat">
+            <span>Response Time</span>
+            <strong>2 min</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Customer Satisfaction</span>
+            <strong>98%</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Active Clients</span>
+            <strong>1.2K</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Support Channels</span>
+            <strong>24/7</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-title">
+          <h2>What we help with</h2>
+          <p>Everything customers need in one place — faster support, quicker access, and better clarity.</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <h3>Fast Access</h3>
+            <p>Customers can quickly reach key pages, support tools, pricing, and contact options without confusion.</p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">📞</div>
+            <h3>Support</h3>
+            <p>We provide responsive help through multiple channels so customers always know where to go for assistance.</p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">✅</div>
+            <h3>Trust & Clarity</h3>
+            <p>Clear communication and transparent services help customers feel informed and confident in every step.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="container">
+        <div class="section-title">
+          <h2>How it works</h2>
+          <p>Simple steps to help customers move from first visit to successful support.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Visit</h3>
+            <p>Customers land on a clear page with easy navigation and quick links to what they need.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Find</h3>
+            <p>They can browse services, answers, and support information without wasting time.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Get Help</h3>
+            <p>When needed, they can reach out and receive fast, friendly assistance from the team.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="support">
+      <div class="container">
+        <div class="section-title">
+          <h2>Frequently asked questions</h2>
+        </div>
+
+        <div class="support-grid">
+          <div>
+            <div class="faq">
+              <h4>How do I contact support?</h4>
+              <p>You can reach us by email, phone, or using the contact form on this page.</p>
+            </div>
+
+            <div class="faq">
+              <h4>Do you offer onboarding help?</h4>
+              <p>Yes. We guide new customers through setup, access, and first steps in a simple process.</p>
+            </div>
+
+            <div class="faq">
+              <h4>What services are included?</h4>
+              <p>We provide support, guidance, service access, and customer communication tailored to your needs.</p>
+            </div>
+          </div>
+
+          <aside class="contact-box" id="contact">
+            <h3>Contact us</h3>
+            <div class="info-row">📍 123 Market Street, Suite 200</div>
+            <div class="info-row">📞 +1 (555) 123-4567</div>
+            <div class="info-row">✉️ hello@yourbrand.com</div>
+
+            <div class="cta-row" style="margin-top: 24px;">
+              <a href="mailto:hello@yourbrand.com" class="btn btn-primary">Email Us</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta-band">
+          <h2>Need a better customer experience?</h2>
+          <p>We help customers navigate your services with confidence through clear design, quick access, and helpful support.</p>
+          <a href="mailto:hello@yourbrand.com" class="btn btn-secondary" style="background:white; color:var(--primary);">Talk to Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 YourBrand. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#support">Support</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
